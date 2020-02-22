@@ -1,12 +1,12 @@
 {
   "name": "@carlambroselli/serverless-helpers",
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of useful helpers for serverless functions",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Carl Ambroselli",
+  "license": "MIT"
 }
