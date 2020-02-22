@@ -21,11 +21,11 @@ yarn add serverless-toolkit
 
 Usage:
 ```
-ErrorMailer(functionToWatch, additionalInfo="", receiverEmail, senderEmail);
+errorMailer(functionToWatch, additionalInfo="", receiverEmail, senderEmail);
 
 // alternatively you can read the environment variables of your function.
 // receiverEmail defaults to process.env.ERROR_RECEIVER_EMAIL and senderEmail defaults to process.env.ERROR_RECEIVER_EMAIL
-ErrorMailer(functionToWatch, additionalInfo="");
+errorMailer(functionToWatch, additionalInfo="");
 ```
 
 Example usage:
@@ -52,9 +52,9 @@ Arguments: firstArg, secondArg
 
 
 Error: This failed.
-    at iWillFail (/Users/carlambroselli/Git/carlambroselli/serverless-foreclosure/test.js:4:9)
-    at replacement (/Users/carlambroselli/Git/carlambroselli/serverless-foreclosure/node_modules/serverless-toolkit/errorMailer/index.js:45:22)
-    at Object. (/Users/carlambroselli/Git/carlambroselli/serverless-foreclosure/test.js:9:1)
+    at iWillFail (/Users/xample/sample/test.js:4:9)
+    at replacement (/Users/example/sample/node_modules/serverless-toolkit/errorMailer/index.js:45:22)
+    at Object. (/Users/xample/sample/test.js:9:1)
     at Module._compile (internal/modules/cjs/loader.js:955:30)
     at Object.Module._extensions..js (internal/modules/cjs/loader.js:991:10)
     at Module.load (internal/modules/cjs/loader.js:811:32)
