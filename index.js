@@ -1,5 +1,5 @@
-const ErrorMailer = require('./errorMailer/index')
+const errorMailer = require('./errorMailer/index').errorMailer
 
 module.exports = {
-  ErrorMailer
+  errorMailer
 }
