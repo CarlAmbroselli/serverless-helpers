@@ -3,7 +3,7 @@ function CatchedException(message) {
   this.name = "CatchedException";
 }
 
-export default class Catcher {
+class Catcher {
   constructor (failFunc = this.failFunDefault) {
     this.fail = failFunc
   }
@@ -79,3 +79,5 @@ export default class Catcher {
   }
 
 }
+
+module.exports = Catcher

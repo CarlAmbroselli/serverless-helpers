@@ -1,7 +1,7 @@
 const sendmail = require('sendmail')();
 const Catcher = require('./catcher');
 
-export default class ErrorMailer {
+class ErrorMailer {
 
   constructor(toWatch, additionalInfo, receiverEmail, senderEmail) {
     return new Promise((resolve) => {
@@ -42,3 +42,5 @@ export default class ErrorMailer {
   }
 
 }
+
+module.exports = ErrorMailer
