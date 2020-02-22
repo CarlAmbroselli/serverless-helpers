@@ -2,6 +2,19 @@
 
 A collection of useful functions for serverless development.
 
+Installation:
+
+*npm*
+```
+npm install --save serverless-toolkit
+```
+
+*yarn*
+```
+yarn add serverless-toolkit
+```
+
+
 [![npm version](https://badge.fury.io/js/serverless-toolkit.svg)](https://badge.fury.io/js/serverless-toolkit)
 
 ### Error Mailer
