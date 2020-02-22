@@ -25,7 +25,8 @@ function iWillFail() {
   throw new Error("This failed.")
 }
 
-var protected = errorMailer(iWillFail, "This is a test", "receiver@carl-ambroselli.de", "example@carl-ambroselli.de")
+// Remember to update receiver and sender since @example.com will often get filtered to spam
+var protected = errorMailer(iWillFail, "This is a test", "receiver@example.com", "sender@example.com")
 
 protected("firstArg", "secondArg")
 ```
