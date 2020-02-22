@@ -52,9 +52,9 @@ Arguments: firstArg, secondArg
 
 
 Error: This failed.
-    at iWillFail (/Users/xample/sample/test.js:4:9)
+    at iWillFail (/Users/example/sample/test.js:4:9)
     at replacement (/Users/example/sample/node_modules/serverless-toolkit/errorMailer/index.js:45:22)
-    at Object. (/Users/xample/sample/test.js:9:1)
+    at Object. (/Users/example/sample/test.js:9:1)
     at Module._compile (internal/modules/cjs/loader.js:955:30)
     at Object.Module._extensions..js (internal/modules/cjs/loader.js:991:10)
     at Module.load (internal/modules/cjs/loader.js:811:32)
