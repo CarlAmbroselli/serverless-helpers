@@ -15,7 +15,7 @@ npm install --save serverless-toolkit
 yarn add serverless-toolkit
 ```
 
-### Error Mailer
+## Error Mailer
 
 **When a function errors, receive the error via email**.
 
@@ -40,4 +40,26 @@ function iWillFail() {
 var protected = errorMailer(iWillFail, "This is a test", "receiver@example.com", "sender@example.com")
 
 protected("firstArg", "secondArg")
+```
+
+Example email:
+```
+An execution error occured!
+Function: iWillFail
+
+Error: This failed.
+Arguments: firstArg, secondArg
+
+
+Error: This failed.
+    at iWillFail (/Users/carlambroselli/Git/carlambroselli/serverless-foreclosure/test.js:4:9)
+    at replacement (/Users/carlambroselli/Git/carlambroselli/serverless-foreclosure/node_modules/serverless-toolkit/errorMailer/index.js:45:22)
+    at Object. (/Users/carlambroselli/Git/carlambroselli/serverless-foreclosure/test.js:9:1)
+    at Module._compile (internal/modules/cjs/loader.js:955:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:991:10)
+    at Module.load (internal/modules/cjs/loader.js:811:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:723:14)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1043:10)
+    at internal/main/run_main_module.js:17:11
+"This is a test"
 ```
