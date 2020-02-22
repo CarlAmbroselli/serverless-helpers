@@ -1,21 +1,19 @@
 # serverless-toolkit
+[![npm version](https://badge.fury.io/js/serverless-toolkit.svg)](https://badge.fury.io/js/serverless-toolkit) ![npm bundle size](https://img.shields.io/bundlephobia/min/serverless-toolkit) ![npm license](https://img.shields.io/npm/l/serverless-toolkit)
 
 A collection of useful functions for serverless development.
 
 Installation:
 
-*npm*
+**npm**
 ```
 npm install --save serverless-toolkit
 ```
 
-*yarn*
+**yarn**
 ```
 yarn add serverless-toolkit
 ```
-
-
-[![npm version](https://badge.fury.io/js/serverless-toolkit.svg)](https://badge.fury.io/js/serverless-toolkit)
 
 ### Error Mailer
 
