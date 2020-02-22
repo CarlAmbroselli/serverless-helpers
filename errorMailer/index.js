@@ -39,12 +39,19 @@ function prettifyArgs(args) {
   return keys.map(x => args[x]).join(", ");
 }
 
-function errorMailer(toWatch, additionalInfo, receiverEmail, senderEmail) {
+function errorMailer(toWatch, errorHandler, additionalInfo, receiverEmail, senderEmail) {
   function replacement() {
     try {
       return toWatch.apply(this, arguments)
     } catch(e) {
-      sendError(e, toWatch, arguments, additionalInfo, receiverEmail, senderEmail)
+      let senderPromise = sendError(e, toWatch, arguments, additionalInfo, receiverEmail, senderEmail)
+      if (errorHandler) {
+        return senderPromise.then(() => errorHandler.apply(this, arguments))
+      } else {
+        return senderPromise.then(() => {
+          throw new Error(e)
+        })
+      }
     }
   }
   return replacement

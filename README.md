@@ -21,23 +21,31 @@ yarn add serverless-toolkit
 
 Usage:
 ```javascript
-errorMailer(functionToWatch, additionalInfo="", receiverEmail, senderEmail);
+// Returns the return value of functionToWatch. If functionToWatch throws an error this will return a Promise.
+// If errorHandler is supplied, it will be called once the error email has been sent and the promise will be resolved with the
+// return value of errorHandler
+errorMailer(functionToWatch, errorHandler, additionalInfo="", receiverEmail, senderEmail);
 
 // alternatively you can read the environment variables of your function.
 // receiverEmail defaults to process.env.ERROR_RECEIVER_EMAIL and senderEmail defaults to process.env.ERROR_RECEIVER_EMAIL
-errorMailer(functionToWatch, additionalInfo="");
+errorMailer(functionToWatch, errorHandler, additionalInfo="");
 ```
 
 Example usage:
 ```javascript
 const errorMailer = require('serverless-toolkit').errorMailer;
 
-function iWillFail() {
+function iWillFail(argOne, argTwo) {
   throw new Error("This failed.")
 }
 
+// this function will be called once the error email has been sent with the same arguments
+function errorHandler(argOne, argTwo) {
+  return Promise.reject()
+}
+
 // Remember to update receiver and sender since @example.com will often get filtered to spam
-var protected = errorMailer(iWillFail, "This is a test", "receiver@example.com", "sender@example.com")
+var protected = errorMailer(iWillFail, errorHandler, "This is a test", "receiver@example.com", "sender@example.com")
 
 protected("firstArg", "secondArg")
 ```
