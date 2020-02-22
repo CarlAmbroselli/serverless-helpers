@@ -27,7 +27,7 @@ Usage:
 errorMailer(functionToWatch, errorHandler, additionalInfo="", receiverEmail, senderEmail);
 
 // alternatively you can read the environment variables of your function.
-// receiverEmail defaults to process.env.ERROR_RECEIVER_EMAIL and senderEmail defaults to process.env.ERROR_RECEIVER_EMAIL
+// receiverEmail defaults to process.env.ERROR_RECEIVER_EMAIL and senderEmail defaults to process.env.ERROR_SENDER_EMAIL
 errorMailer(functionToWatch, errorHandler, additionalInfo="");
 ```
 

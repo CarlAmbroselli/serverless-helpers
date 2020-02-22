@@ -17,7 +17,7 @@ function sendError(error, func, args, additionalInfo, receiverEmail, senderEmail
       </html>`;
 
       receiverEmail = receiverEmail || process.env.ERROR_RECEIVER_EMAIL;
-      senderEmail = senderEmail || process.env.ERROR_RECEIVER_EMAIL || "ErrorMailer";
+      senderEmail = senderEmail || process.env.ERROR_SENDER_EMAIL || receiverEmail || "ErrorMailer";
 
       sendmail({
           from: senderEmail,
