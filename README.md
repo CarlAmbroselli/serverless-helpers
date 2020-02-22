@@ -6,12 +6,12 @@ A collection of useful functions for serverless development.
 Installation:
 
 **npm**
-```
+```bash
 npm install --save serverless-toolkit
 ```
 
 **yarn**
-```
+```bash
 yarn add serverless-toolkit
 ```
 
@@ -20,7 +20,7 @@ yarn add serverless-toolkit
 **When a function errors, receive the error via email**.
 
 Usage:
-```
+```javascript
 errorMailer(functionToWatch, additionalInfo="", receiverEmail, senderEmail);
 
 // alternatively you can read the environment variables of your function.
@@ -29,7 +29,7 @@ errorMailer(functionToWatch, additionalInfo="");
 ```
 
 Example usage:
-```
+```javascript
 const errorMailer = require('serverless-toolkit').errorMailer;
 
 function iWillFail() {
