@@ -15,19 +15,17 @@ ErrorMailer(functionToWatch, additionalInfo="", receiverEmail, senderEmail);
 // alternatively you can read the environment variables of your function.
 // receiverEmail defaults to process.env.ERROR_RECEIVER_EMAIL and senderEmail defaults to process.env.ERROR_RECEIVER_EMAIL
 ErrorMailer(functionToWatch, additionalInfo="");
-
 ```
 
 Example usage:
 ```
-const ErrorMailer = require('serverless-toolkit').ErrorMailer;
+const errorMailer = require('serverless-toolkit').errorMailer;
 
 function iWillFail() {
   throw new Error("This failed.")
 }
 
-var protected = new ErrorMailer(iWillFail, "This is a test", "receiver@example.com", "sender@example.com")
+var protected = errorMailer(iWillFail, "This is a test", "receiver@carl-ambroselli.de", "example@carl-ambroselli.de")
 
-protected()
-
+protected("firstArg", "secondArg")
 ```
