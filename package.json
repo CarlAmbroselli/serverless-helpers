@@ -11,6 +11,7 @@
   "author": "Carl Ambroselli",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.624.0",
     "sendmail": "^1.6.1"
   }
 }

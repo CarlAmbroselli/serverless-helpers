@@ -17,7 +17,7 @@ yarn add serverless-toolkit
 
 ## Error Mailer
 
-**When a function errors, receive the error via email**.
+**When a function errors, receive the error via email**. This is first tries to send the email via Amazon SES. If that fails it will fallback to sendmail.
 
 Usage:
 ```javascript

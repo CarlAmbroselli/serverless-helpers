@@ -1,4 +1,37 @@
 const sendmail = require('sendmail')();
+const AWS = require('aws-sdk');
+
+function awsSendMail(subject, body, sender, receiver) {
+  AWS.config.update({region: 'eu-west-1'});
+  var params = {
+    Destination: {
+      CcAddresses: [],
+      ToAddresses: [
+        receiver,
+      ]
+    },
+    Message: {
+      Body: {
+        Html: {
+         Charset: "UTF-8",
+         Data: body
+        },
+       },
+       Subject: {
+        Charset: 'UTF-8',
+        Data: subject
+       }
+      },
+    Source: sender,
+    ReplyToAddresses: [],
+  };
+
+  var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
+
+  return sendPromise.then(() => {
+    console.log("Error report sent via email.")
+  });
+}
 
 function sendError(error, func, args, additionalInfo, receiverEmail, senderEmail) {
     return new Promise((resolve) => {
@@ -18,11 +51,14 @@ function sendError(error, func, args, additionalInfo, receiverEmail, senderEmail
 
       receiverEmail = receiverEmail || process.env.ERROR_RECEIVER_EMAIL;
       senderEmail = senderEmail || process.env.ERROR_SENDER_EMAIL || receiverEmail || "ErrorMailer";
+      subject = 'Execution of ' + func.name + ' failed.';
 
-      sendmail({
+      return awsSendMail(subject, content, senderEmail, receiverEmail).catch((error) => {
+        console.log("Error sending using AWS, will fallback to sendmail.")
+        sendmail({
           from: senderEmail,
           to: receiverEmail,
-          subject: 'Execution of ' + func.name + ' failed.',
+          subject: subject,
           html: content,
         }, function(err, reply) {
           if (err || reply) {
@@ -30,7 +66,8 @@ function sendError(error, func, args, additionalInfo, receiverEmail, senderEmail
             console.dir(reply);
           }
           resolve(error, func, args);
-      });
+        });
+      })
     })
 }
 
@@ -42,6 +79,9 @@ function prettifyArgs(args) {
 function errorMailer(toWatch, errorHandler, additionalInfo, receiverEmail, senderEmail) {
   function replacement() {
     try {
+      process.on('unhandledRejection', (reason) => {
+        sendError(reason, toWatch, arguments, additionalInfo, receiverEmail, senderEmail)
+      });
       return toWatch.apply(this, arguments)
     } catch(e) {
       let senderPromise = sendError(e, toWatch, arguments, additionalInfo, receiverEmail, senderEmail)
