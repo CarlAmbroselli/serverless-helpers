@@ -110,3 +110,10 @@ async uploadFromUrl(url, remoteFileDestination, customHeaders)
 async mergeCsv(localFilePath, remoteFilePath, primaryKey, deduplicateInputFirst=false) // this will merge two csv files based on a primaryKey (or the whole row if primaryKey is undefined or not found in the input)
 async uploadFile (localFilePath, remoteFilePath)
 ```
+
+Sample usage:
+```
+const { Storage } = require('serverless-toolkit')
+let storage = new Storage()
+let obj = await storage.getCsvAsObject("/test.csv")
+```
