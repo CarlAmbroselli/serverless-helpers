@@ -11,7 +11,7 @@ const retry = require('async-retry')
 const path = require('path');
 const request = require('request');
 const queue = require('async/queue');
-
+const db = require('dropbox-stream');
 
 class Storage {
 
@@ -21,6 +21,8 @@ class Storage {
     if (!accessToken) {
       throw("No accessToken specified set!")
     }
+
+    this.accessToken = accessToken;
     
     this.dbx = new Dropbox({
       accessToken: accessToken,
@@ -161,22 +163,22 @@ class Storage {
   async _downloadAndUploadFromUrl(task) {
     let {url, destination, customHeaders} = task
     return new Promise(async (resolve, reject) => {
-      let tempFile = '/tmp/' + uuidv4()
-      let wstream = fs.createWriteStream(tempFile);
-      wstream.on('finish', () => {
-        this.uploadFile(tempFile, destination).then(result => {
-          fs.unlinkSync(tempFile)
-          resolve(result)
-        }).catch(result => {
-          fs.unlinkSync(tempFile)
-          reject(result)
-        })
-      });
+      const upStream = db.createDropboxUploadStream({
+        token: this.accessToken,
+        path: destination,
+        chunkSize: 1000 * 1024,
+        autorename: false,
+        mode: 'overwrite'
+      })
+      .on('error', err => reject(err))
+      .on('progress', res => console.log("Upload progress: " + res))
+      .on('metadata', metadata => resolve(metadata))
+
       var options = {
         url: url,
         headers: customHeaders
       };
-      request(options).pipe(wstream)
+      request(options).pipe(upStream)
     })
   }
 
