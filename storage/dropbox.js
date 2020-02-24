@@ -11,7 +11,7 @@ const retry = require('async-retry')
 const path = require('path');
 const request = require('request');
 const queue = require('async/queue');
-const dropboxV2Api = require('dropbox-v2-api');
+
 
 class Storage {
 
@@ -26,10 +26,6 @@ class Storage {
       accessToken: accessToken,
       fetch: fetch
     })
-
-    this.dbxV2 = dropboxV2Api.authenticate({
-        token: accessToken
-    });
     
     // Dropbox will throw errors when we try to upload too many files in parallel
     this.uploadQueue = queue((task, callback) => {
@@ -165,24 +161,22 @@ class Storage {
   async _downloadAndUploadFromUrl(task) {
     let {url, destination, customHeaders} = task
     return new Promise(async (resolve, reject) => {
-      const dropboxUploadStream = this.dbxV2({
-          resource: 'files/upload',
-          parameters: {
-              path: destination
-          }
-      }, (err, result) => {
-        if (err) {
-          reject(err)
-        } else {
+      let tempFile = '/tmp/' + uuidv4()
+      let wstream = fs.createWriteStream(tempFile);
+      wstream.on('finish', () => {
+        this.uploadFile(tempFile, destination).then(result => {
+          fs.unlinkSync(tempFile)
           resolve(result)
-        }
+        }).catch(result => {
+          fs.unlinkSync(tempFile)
+          reject(result)
+        })
       });
-      
       var options = {
         url: url,
         headers: customHeaders
       };
-      request(options).pipe(dropboxUploadStream)
+      request(options).pipe(wstream)
     })
   }
 
