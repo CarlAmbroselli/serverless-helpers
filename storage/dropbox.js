@@ -171,7 +171,7 @@ class Storage {
         mode: 'overwrite'
       })
       .on('error', err => reject(err))
-      .on('progress', res => console.log("Upload progress: " + Math.floor(res / 1024) + ' MB'))
+      .on('progress', res => console.log("Upload progress: " + Math.floor(res / 1024 / 1024) + ' MB'))
       .on('metadata', metadata => resolve(metadata))
 
       var options = {
