@@ -117,3 +117,21 @@ const { Storage } = require('serverless-toolkit')
 let storage = new Storage()
 let obj = await storage.getCsvAsObject("/test.csv")
 ```
+
+## Log Writer
+
+Outputs function results to a specified file in Dropbox
+
+```javascript
+toOutputStoringAsyncFunction(func, functionName=func.name, outputPath="/data/data-health");
+```
+
+Sample usage:
+```javascript
+function testFunction() {
+  return 42;
+}
+
+const newFunction = toOutputStoringAsyncFunction(testFunction)
+newFunction()
+```

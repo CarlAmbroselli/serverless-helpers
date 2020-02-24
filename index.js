@@ -1,7 +1,9 @@
-const errorMailer = require('./errorMailer/index').errorMailer
+const { errorMailer } = require('./errorMailer/index')
 const Storage = require('./storage/dropbox')
+const { toOutputStoringAsyncFunction } = require('./logWriter/index')
 
 module.exports = {
   errorMailer,
-  Storage
+  Storage,
+  toOutputStoringAsyncFunction
 }
