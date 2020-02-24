@@ -76,6 +76,10 @@ function prettifyArgs(args) {
   return keys.map(x => args[x]).join(", ");
 }
 
+function renameFunction(fn, name) {
+  return Function("fn", "return (function " + name + "(){\n  return fn.apply(this, arguments)\n});")(fn);
+};
+
 function errorMailer(toWatch, errorHandler, additionalInfo, receiverEmail, senderEmail) {
   function replacement() {
     try {
@@ -94,7 +98,7 @@ function errorMailer(toWatch, errorHandler, additionalInfo, receiverEmail, sende
       }
     }
   }
-  return replacement
+  return renameFunction(replacement, toWatch.name)
 }
 
 module.exports = {
